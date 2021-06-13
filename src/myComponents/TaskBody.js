@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import Modal from './Modal'
 const TaskBody = () => {
-    console.warn("hello world");
+    
     const [openModal,setOpenModal]=useState(false)
 
     const [task,settask]=useState(
@@ -23,13 +23,22 @@ const TaskBody = () => {
             return elem.id!=id;
         }))
     }
+    const handleClick = (e)=>{
+        e.preventDefault();
+        var text = document.getElementById("value").value;
+        console.log(text);
+        var l = task.length
+        settask([...task,{id:l,desc:text}])
+        console.log(task);
+    }
     return (
         <>
         <div className="content">
             {task.map((item)=>{
                return <div className='item' key={item.id} onDoubleClick={()=>deleteTask(item.id)}>{item.desc}</div>
             })}
-            <button onClick={()=>setOpenModal(true)} className='btn'>+</button>
+            <input type="text" name = "value " id = "value"/>
+            <button onClick={handleClick} className='btn'>+</button>
             {openModal?<Modal tasks={task} setTasks={settask} setOpenModals={setOpenModal} />:''} 
         </div> 
         </>
